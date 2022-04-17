@@ -1,25 +1,45 @@
 import React from "react";
 import "./style.css";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/actions/cart";
 
 function Products(params) {
-  const { addItemToCart, products } = params;
+  const dispatch = useDispatch();
+  const { products } = params;
+
+  // Add to cart
+  const addToCart = (data) => {
+    const selectedProduct = {
+      quantity: 1,
+      ...data,
+    };
+
+    dispatch(addProduct(selectedProduct));
+  };
+
   return (
-    <div className="row">
+    <div className="d-flex flex-row bd-highlight flex-wrap text-center mt-3">
       {products.map((data) => (
         <div
-          className="col-md-2 col-sm-4 col-6"
+          class=" p-1 m-1 bd-highlight shadow-sm border "
           key={data.id}
-          onClick={() => addItemToCart(data)}
+          onClick={() => addToCart(data)}
+          style={{ width: "102px" }}
         >
-          <div className="rounded shadow border rounded p-2 mt-4">
+          <div>
             <img
-              className="rounded float-start"
+              className="rounded float-start text-center"
               src={`/product/${data.image}`}
               alt="..."
-              style={{ maxWidth: "100%" }}
+              style={{ width: "92px" }}
             />
-            <p className="text-center text-break">{data.name}</p>
           </div>
+          <p
+            className=" text-wrap"
+            style={{ fontSize: "15px", paddingBottom: "0px !important" }}
+          >
+            {data.name}
+          </p>
         </div>
       ))}
     </div>
