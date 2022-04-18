@@ -25,6 +25,7 @@ function Products(params) {
           key={data.id}
           onClick={() => addToCart(data)}
           style={{ width: "102px" }}
+          role="button"
         >
           <div>
             <img
@@ -35,7 +36,7 @@ function Products(params) {
             />
           </div>
           <p
-            className=" text-wrap"
+            className="text-wrap"
             style={{ fontSize: "15px", paddingBottom: "0px !important" }}
           >
             {data.name}
