@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   productsList,
   removeProduct,
   // incrementQuantity,
 } from "../../redux/actions/cart";
+// import { Toastify } from "../toastify/index";
 import { RiDeleteBin2Line, RiCloseFill } from "react-icons/ri";
 import "./style.css";
 
@@ -18,6 +21,11 @@ function CartItems(props) {
     dispatch(productsList());
   }, [dispatch]);
 
+  // const notify = () => {
+  //   return Toastify.Info("hello");
+  //   console.log("hello toast");
+  // };
+  const notify = () => toast("Order complete successfuly");
   useEffect(() => {
     if (products && products.length > 0) {
       let preTotal = 0;
@@ -37,45 +45,9 @@ function CartItems(props) {
 
   return (
     <div className="mt-3 block">
+      <ToastContainer />
       <h1>Cart items</h1>
       <div style={{ height: "500px" }}>
-        {/* <div className="d-flex justify-content-around">
-          <div className="p-2">Name</div>
-          <div className="p-2">Quantity</div>
-          <div className="p-2">Price</div>
-          <div className="p-2">add</div>
-          <div className="p-2">remove</div>
-        </div>
-        {products && products.length > 0 ? (
-          products.map((cart) => (
-            <div key={cart.id}>
-              <div className="d-flex justify-content-around">
-                <div className="p-2">{cart.name}</div>
-                <div className="p-2">{cart.quantity}</div>
-                <div className="p-2">{cart.price.toFixed(2)}</div>
-                <div className="p-2">
-                  <button
-                    className="btn btn-sm btn-primary"
-                    onClick={() => dispatch(incrementQuantity(cart.id))}
-                  >
-                    +
-                  </button>
-                </div>
-                <div className="p-2">
-                  <button
-                    className="btn btn-sm btn-danger"
-                    onClick={() => dispatch(removeProduct(cart.id))}
-                  >
-                    -
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <div className="text-center pt-5">Cart is empty</div>
-        )} */}
-
         <table class="table table-bordered text-wrap">
           <thead
             style={{
@@ -169,7 +141,11 @@ function CartItems(props) {
               </div>
             </td>
             <td rowspan="2" className="bg-success text-center">
-              <div style={{ width: "100%", color: "white" }} role="button">
+              <div
+                style={{ width: "100%", color: "white" }}
+                // role="button"
+                onClick={notify}
+              >
                 Payment
               </div>
             </td>
