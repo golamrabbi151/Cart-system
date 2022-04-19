@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   productsList,
   removeProduct,
-  incrementQuantity,
+  // incrementQuantity,
 } from "../../redux/actions/cart";
 import { RiDeleteBin2Line, RiCloseFill } from "react-icons/ri";
 import "./style.css";
@@ -13,9 +13,7 @@ function CartItems(props) {
   const [subTotal, setSubTotal] = useState(0);
   const [totalItem, setTotalItem] = useState(0);
   const { products } = useSelector((state) => state.products);
-
   console.log(totalItem);
-
   useEffect(() => {
     dispatch(productsList());
   }, [dispatch]);
@@ -40,7 +38,7 @@ function CartItems(props) {
   return (
     <div className="mt-3 block">
       <h1>Cart items</h1>
-      <div>
+      <div style={{ height: "500px" }}>
         {/* <div className="d-flex justify-content-around">
           <div className="p-2">Name</div>
           <div className="p-2">Quantity</div>
@@ -126,14 +124,69 @@ function CartItems(props) {
             )}
           </tbody>
         </table>
-      </div>
-      <div className="d-flex">
-        <div className="p-2"> subTotal</div>
-        <div className="p-2"> totalItem</div>
-      </div>
-      <div className="d-flex">
-        <div className="p-2">{subTotal ? subTotal : 0}</div>
-        <div className="p-2">{totalItem ? totalItem : 0}</div>
+        <table className="table table-bordered">
+          <tr>
+            <td colspan="2">
+              <span className="float-start">Items</span>
+              <span className="float-end">{totalItem ? totalItem : 0}</span>
+            </td>
+            <td colspan="3">
+              <span className="float-start">Total</span>
+              <span className="float-end">
+                {subTotal ? subTotal.toFixed(2) : 0.0}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <span className="float-start">OrderTax</span>
+              <span className="float-end">0.00</span>
+            </td>
+            <td colspan="3">
+              <span className="float-start">Discount</span>
+              <span className="float-end">0.00</span>
+            </td>
+          </tr>
+        </table>
+        <table className="table">
+          <tr>
+            <td colSpan="5" style={{ background: "#3c3a3a", color: "white" }}>
+              <span className="float-start">Total Payable</span>
+              <span className="float-end">
+                {subTotal ? subTotal.toFixed(2) : 0.0}
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td className="bg-warning text-center">
+              <div style={{ width: "100%", color: "white" }} role="button">
+                Suspend
+              </div>
+            </td>
+            <td className="bg-info text-center">
+              <div style={{ width: "100%", color: "white" }} role="button">
+                Order
+              </div>
+            </td>
+            <td rowspan="2" className="bg-success text-center">
+              <div style={{ width: "100%", color: "white" }} role="button">
+                Payment
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td className="bg-danger text-center">
+              <div style={{ width: "100%", color: "white" }} role="button">
+                Cancle
+              </div>
+            </td>
+            <td className="bg-primary text-center">
+              <div style={{ width: "100%", color: "white" }} role="button">
+                Bill
+              </div>
+            </td>
+          </tr>
+        </table>
       </div>
     </div>
   );

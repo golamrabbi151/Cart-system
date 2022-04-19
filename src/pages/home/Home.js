@@ -40,7 +40,7 @@ function Home() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-4">
+        <div className="col-md-4 overflow-auto">
           <CartItems
             addItemToCart={addItemToCart}
             cartData={cartData}
