@@ -1,7 +1,7 @@
 import React from "react";
-import "./style.css";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/actions/cart";
+import "./style.css";
 
 function Products(params) {
   const dispatch = useDispatch();
@@ -21,26 +21,19 @@ function Products(params) {
     <div className="d-flex flex-row bd-highlight flex-wrap text-center mt-3">
       {products.map((data) => (
         <div
-          className=" p-1 m-1 bd-highlight shadow-sm border "
+          className=" p-1 m-1 bd-highlight shadow-sm border productSection"
           key={data.id}
           onClick={() => addToCart(data)}
-          style={{ width: "100px" }}
           role="button"
         >
           <div>
             <img
-              className="rounded float-start text-center"
+              className="rounded float-start text-center productImage"
               src={`/product/${data.image}`}
-              alt="..."
-              style={{ width: "92px" }}
+              alt={data.image}
             />
           </div>
-          <p
-            className="text-wrap"
-            style={{ fontSize: "13px", paddingBottom: "0px !important" }}
-          >
-            {data.name}
-          </p>
+          <p className="text-wrap">{data.name}</p>
         </div>
       ))}
     </div>

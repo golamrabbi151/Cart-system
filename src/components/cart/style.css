@@ -1,3 +1,20 @@
 .table>:not(:first-child) {
     border-top: none !important;
 }
+
+.cartTableHead{
+    background-color: #5991e3;
+    border-color: #80808036;
+    border-top: none !important;
+    color: white
+}
+
+.totalPayable{
+    background: #3c3a3a;
+     color: white
+}
+
+.largeButton {
+    width: 100%;
+    color: white
+}
