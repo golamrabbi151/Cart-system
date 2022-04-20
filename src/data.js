@@ -15,7 +15,7 @@ const Products = [
   },
   {
     id: "3",
-    name: "Computer",
+    name: "Computer-2",
     price: 200,
     image: "computer-set-2.jpg",
     description: "Test descripotion",
@@ -36,7 +36,7 @@ const Products = [
   },
   {
     id: "6",
-    name: "laptop.jpg",
+    name: "laptop",
     price: 120,
     image: "laptop.jpg",
     description: "Test descripotion",
@@ -63,4 +63,8 @@ export function getProducts() {
 
 export function getProduct(id) {
   return Products.find((item) => item.id === id);
+}
+
+export function getProductByName(name) {
+  return Products.find((item) => item.name === name);
 }

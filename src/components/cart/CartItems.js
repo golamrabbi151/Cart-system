@@ -2,30 +2,49 @@ import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
+import { addProduct } from "../../redux/actions/cart";
 import {
   productsList,
   removeProduct,
   // incrementQuantity,
 } from "../../redux/actions/cart";
-// import { Toastify } from "../toastify/index";
-import { RiDeleteBin2Line, RiCloseFill } from "react-icons/ri";
+import { getProductByName } from "../../data";
+import {
+  RiDeleteBin2Line,
+  RiCloseFill,
+  RiPencilFill,
+  RiEyeFill,
+  RiAddCircleFill,
+} from "react-icons/ri";
 import "./style.css";
 
 function CartItems(props) {
   const dispatch = useDispatch();
   const [subTotal, setSubTotal] = useState(0);
   const [totalItem, setTotalItem] = useState(0);
+  const [searchItem, setSearchItems] = useState([]);
   const { products } = useSelector((state) => state.products);
-  console.log(totalItem);
+  console.log(searchItem);
+
+  // Add to cart
+  const addToCart = () => {
+    console.log("click on add");
+    const searchProduct = getProductByName(searchItem);
+    if (searchProduct) {
+      const selectedProduct = {
+        quantity: 1,
+        ...searchProduct,
+      };
+
+      dispatch(addProduct(selectedProduct));
+    }
+  };
+
   useEffect(() => {
     dispatch(productsList());
   }, [dispatch]);
 
-  // const notify = () => {
-  //   return Toastify.Info("hello");
-  //   console.log("hello toast");
-  // };
-  const notify = () => toast("Order complete successfuly");
+  const notify = () => toast.success("Order complete successfuly");
   useEffect(() => {
     if (products && products.length > 0) {
       let preTotal = 0;
@@ -44,11 +63,47 @@ function CartItems(props) {
   }, [products]);
 
   return (
-    <div className="mt-3 block">
-      <ToastContainer />
-      <h1>Cart items</h1>
-      <div style={{ height: "500px" }}>
-        <table class="table table-bordered text-wrap">
+    <div className="mt-3 block" style={{ height: "100vh" }}>
+      <div className="input-group mb-3">
+        <input type="text" className="form-control" placeholder="" />
+        <span className="input-group-text" role="button">
+          <RiPencilFill />
+        </span>
+        <span className="input-group-text" role="button">
+          <RiEyeFill />
+        </span>
+        <span className="input-group-text" role="button">
+          <RiAddCircleFill />
+        </span>
+      </div>
+      {/* select */}
+      <div className="mb-3">
+        <select className="form-select" aria-label="Default select example">
+          <option>Select warehouse</option>
+          <option value="1">warehouse one</option>
+          <option value="2">warehouse two</option>
+          <option value="3">warehouse three</option>
+        </select>
+      </div>
+      <div className="input-group mb-3">
+        <input
+          type="text"
+          name="name"
+          className="form-control"
+          placeholder="Search product by name"
+          onChange={(e) => setSearchItems(e.target.value)}
+          defaultValue={searchItem}
+        />
+        <span
+          className="input-group-text"
+          role="button"
+          onClick={() => addToCart()}
+        >
+          <RiAddCircleFill />
+        </span>
+      </div>
+      <div>
+        <table className="table table-bordered text-wrap">
           <thead
             style={{
               backgroundColor: "#5991e3",
@@ -92,33 +147,42 @@ function CartItems(props) {
                 </tr>
               ))
             ) : (
-              <div className="text-center pt-5">Cart is empty</div>
+              <tr>
+                <td colSpan={5}>
+                  <div className="text-center pt-3 ">
+                    <img src="./noData.png" alt="..." width={100} />
+                  </div>
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
         <table className="table table-bordered">
-          <tr>
-            <td colspan="2">
-              <span className="float-start">Items</span>
-              <span className="float-end">{totalItem ? totalItem : 0}</span>
-            </td>
-            <td colspan="3">
-              <span className="float-start">Total</span>
-              <span className="float-end">
-                {subTotal ? subTotal.toFixed(2) : 0.0}
-              </span>
-            </td>
-          </tr>
-          <tr>
-            <td colspan="2">
-              <span className="float-start">OrderTax</span>
-              <span className="float-end">0.00</span>
-            </td>
-            <td colspan="3">
-              <span className="float-start">Discount</span>
-              <span className="float-end">0.00</span>
-            </td>
-          </tr>
+          <thead></thead>
+          <tbody>
+            <tr>
+              <td colSpan="2">
+                <span className="float-start">Items</span>
+                <span className="float-end">{totalItem ? totalItem : 0}</span>
+              </td>
+              <td colSpan="3">
+                <span className="float-start">Total</span>
+                <span className="float-end">
+                  {subTotal ? subTotal.toFixed(2) : 0.0}
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td colSpan="2">
+                <span className="float-start">OrderTax</span>
+                <span className="float-end">0.00</span>
+              </td>
+              <td colSpan="3">
+                <span className="float-start">Discount</span>
+                <span className="float-end">0.00</span>
+              </td>
+            </tr>
+          </tbody>
         </table>
         <table className="table">
           <tr>
@@ -140,11 +204,10 @@ function CartItems(props) {
                 Order
               </div>
             </td>
-            <td rowspan="2" className="bg-success text-center">
+            <td rowSpan="2" className="bg-success text-center" role="button">
               <div
                 style={{ width: "100%", color: "white" }}
-                // role="button"
-                onClick={notify}
+                onClick={() => (subTotal ? notify() : "")}
               >
                 Payment
               </div>
@@ -163,6 +226,7 @@ function CartItems(props) {
             </td>
           </tr>
         </table>
+        <ToastContainer />
       </div>
     </div>
   );

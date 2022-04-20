@@ -21,10 +21,10 @@ function Products(params) {
     <div className="d-flex flex-row bd-highlight flex-wrap text-center mt-3">
       {products.map((data) => (
         <div
-          class=" p-1 m-1 bd-highlight shadow-sm border "
+          className=" p-1 m-1 bd-highlight shadow-sm border "
           key={data.id}
           onClick={() => addToCart(data)}
-          style={{ width: "102px" }}
+          style={{ width: "100px" }}
           role="button"
         >
           <div>
@@ -37,7 +37,7 @@ function Products(params) {
           </div>
           <p
             className="text-wrap"
-            style={{ fontSize: "15px", paddingBottom: "0px !important" }}
+            style={{ fontSize: "13px", paddingBottom: "0px !important" }}
           >
             {data.name}
           </p>
